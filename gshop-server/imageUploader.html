@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		
+		<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	</head>
+	<body>
+<!--		
+		<form action="" method="post"
+			enctype="multipart/form-data">-->
+			<input type="file" name="" id="file"/>
+			<button onclick="doUpload()" >提交</button>
+			<img src="" alt="" />
+<!--			
+		</form>-->
+		
+		<script>
+			function doUpload(){
+				let file = $('#file').get(0).files[0]
+//				console.log(el)
+				console.log(file)
+				let formdata = new FormData()
+				
+				formdata.append('hehe', file)
+				
+				console.log(file)
+				
+				$.ajax({
+					url: 'http://localhost:3000/file/upload',
+					type: 'POST',
+					cache: false,
+					data: formdata,
+					processData: false,
+					contentType: false,
+					success: function(data) {
+						console.log(data)
+						if(data.err === 0){
+							var temp = `http://localhost:3000${data.url}`;
+							$('img').attr('src', temp)
+						}else{
+							alert("上传失败: " + data)
+						}
+					}
+				})
+				
+				
+			}
+		</script>
+	</body>
+</html>
